@@ -1,20 +1,10 @@
-from flask_restful import Resource,reqparse
-from flask.common.models import Task,TaskSchema
-from os import sys, path
-sys.path.append(path.split(path.dirname(path.dirname(path.abspath(__file__))))[0])
-
-
-from flask_api import db
-
-parser = reqparse.RequestParser()
-parser.add_argument('task')
-taskschema = TaskSchema()
+from flask_restful import Resource, reqparse
 
 
 class TodoList(Resource):
     def get(self):
         tasks = Task.query.all()
-        data=[]
+        data = []
         for i in tasks:
             data.append(taskschema.dump(i).data)
         return data
@@ -26,3 +16,9 @@ class TodoList(Resource):
         db.session.commit()
         return taskschema.jsonify(task), 201
 
+from flask_api.app import db, ma
+from flask_api.common.models import Task, TaskSchema
+
+parser = reqparse.RequestParser()
+parser.add_argument('task')
+taskschema = TaskSchema()

@@ -1,4 +1,5 @@
-from ..app import db, ma
+from flask_api.app import db, ma
+
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
